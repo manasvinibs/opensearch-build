@@ -28,7 +28,7 @@ def docker_args = [
 ]
 
 def agent_nodes = [
-    "linux_x64": "Jenkins-Agent-AL2023-X64-C54xlarge-Docker-Host",
+    "linux_x64": "Fork Agent 2",
     "linux_arm64": "Jenkins-Agent-AL2023-Arm64-C6g4xlarge-Docker-Host",
     "windows_x64": "Jenkins-Agent-Windows2019-X64-C54xlarge-Docker-Host",
 ]
@@ -283,10 +283,10 @@ pipeline {
                                                 throw new Exception("Error running integtest for component ${local_component}", e)
                                             } finally {
                                                 echo "Completed running integtest for component ${local_component}"
-                                                uploadTestResults(
+                                               /* uploadTestResults(
                                                     buildManifestFileName: BUILD_MANIFEST,
                                                     jobName: JOB_NAME
-                                                )
+                                                )*/
                                                 postCleanup()
                                             }
                                         }

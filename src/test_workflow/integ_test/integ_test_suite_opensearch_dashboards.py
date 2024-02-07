@@ -59,8 +59,10 @@ class IntegTestSuiteOpenSearchDashboards(IntegTestSuite):
         # Integ-tests for OSD now clones FunctionalTestDashboards Repository by default and points to integtest.sh from FunctionalTestDashboards for all OSD plugins
 
         self.repo = GitRepository(
-            build_manifest_opensearch_dashboards.components['functionalTestDashboards'].repository,
-            build_manifest_opensearch_dashboards.components['functionalTestDashboards'].ref,
+            "https://github.com/manasvinibs/opensearch-dashboards-functional-test.git",
+            # build_manifest_opensearch_dashboards.components['functionalTestDashboards'].repository,
+            "main",
+            # build_manifest_opensearch_dashboards.components['functionalTestDashboards'].ref,
             os.path.join(self.work_dir, self.component.name),
             test_config.working_directory
         )
@@ -110,7 +112,7 @@ class IntegTestSuiteOpenSearchDashboards(IntegTestSuite):
             return {"endpoint": node_endpoint.endpoint, "port": node_endpoint.port, "transport": node_endpoint.transport}
         if os.path.exists(script):
             single_node = cluster_endpoints[0].data_nodes[0]
-            cmd = f"bash {script} -b {single_node.endpoint} -p {single_node.port} -s {str(security).lower()} -t {self.component.name} -v {self.bundle_manifest.build.version} -o default -r false"
+            cmd = f"bash {script} -b {single_node.endpoint} -p {single_node.port} -s {str(security).lower()} -t {self.component.name} -v {self.bundle_manifest.build.version} -o default -r true"
             self.repo_work_dir = os.path.join(
                 self.repo.dir, self.test_config.working_directory) if self.test_config.working_directory is not None else self.repo.dir
             (status, stdout, stderr) = execute(cmd, self.repo_work_dir, True, False)
